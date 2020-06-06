@@ -1,0 +1,4 @@
+<select class="form-control" id="state" #state name="state" (change)="selectItem(state.value)">
+    <option value="">N/A</option>
+    <option *ngFor="let value of values" value={{value.value}}>{{value.label}}</option>
+</select>

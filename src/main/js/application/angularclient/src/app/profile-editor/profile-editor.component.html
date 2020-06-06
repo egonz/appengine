@@ -1,0 +1,54 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit('step1')">
+    <div class="row">
+        <div class="col-sm-5">
+            <label class="app-engine-label" for="fullNameFormControl">What is your full name?</label>
+            <input type="text" class="form-control" formControlName="fullName">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label class="app-engine-label">What is your age?</label>
+            <input type="number" class="form-control" formControlName="age" min="1">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <label class="app-engine-label">Is this loan for a new purchase or a refinance?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="purchase" name="loanPurpose" formControlName="loanPurpose">
+                <label class="form-check-label">
+                    Purchase
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="refinance" name="loanPurpose" formControlName="loanPurpose">
+                <label class="form-check-label">
+                    Refinance
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <button class="button" type="submit">Next</button>
+        </div>
+    </div>
+
+    <div class=" debug">
+        <div class="row">
+            <div class="col-sm-4">
+                DEBUG: 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                Form Status: {{ profileForm.status }} Age Validation: {{ this.profileForm.get('age').errors | json }}
+                Step: {{ step }} 
+            </div>
+        </div>
+    </div>
+</form>

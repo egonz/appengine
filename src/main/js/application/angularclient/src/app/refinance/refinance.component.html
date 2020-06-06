@@ -1,0 +1,50 @@
+<div class="row">
+    <div id="refinance-main" class="col-md">
+        If you're refinancing your loan, please indicate the address of the property on which
+the loan was taken out.
+    </div>
+</div>
+<form [formGroup]="refinanceForm" (ngSubmit)="onSubmit('step2')">
+    <div class="row">
+        <div class="col-sm-5">
+            <label class="app-engine-label" for="fullNameFormControl">What is the street address?</label>
+            <input type="text" class="form-control" formControlName="streetAddress">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <label class="app-engine-label" for="fullNameFormControl">What is the city?</label>
+            <input type="text" class="form-control" formControlName="city">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <label class="app-engine-label control-label" for="fullNameFormControl">What is the state?</label>
+            <state-picker (select)="action($event.value)"></state-picker>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label class="app-engine-label" for="fullNameFormControl">What is the zipcode?</label>
+            <input type="number" pattern="^[0-9]{5}(?:-[0-9]{4})?$" class="form-control" formControlName="zipcode">
+        </div>
+    </div>
+</form>
+
+<div class=" debug">
+    <div class="row">
+        <div class="col-sm-4">
+            DEBUG: 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            Form Status: {{ refinanceForm.status }}
+            Step: {{ step }} 
+        </div>
+    </div>
+</div>
