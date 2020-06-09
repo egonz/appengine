@@ -41,6 +41,7 @@ export class ProfileEditorComponent implements OnInit {
 
   onSubmit() {
     if(!this.profileForm.valid) {
+      alert('Please complete all required data.');
       return false;
     } else {
       let loanApp = new LoanApp();

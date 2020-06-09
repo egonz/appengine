@@ -102,6 +102,7 @@ export class RefinanceComponent implements OnInit {
 
   onSubmit() {
     if(!this.refinanceForm.valid) {
+      alert('Please complete all required data.');
       return false;
     } else {
       let loanCookie = this.loanCookieService.getLoanCookie();
