@@ -5,18 +5,18 @@ import com.example.appengine.controller.dto.LoanApp;
 import com.example.appengine.service.statemachine.ProcessException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.UUID;
 
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class LoanStateTransitionsManagerTest {
+public class LoanStateTransitionsManagerTest {
 
     @Autowired
     private LoanStateTransitionsManager stateTrasitionsManager;
@@ -27,11 +27,11 @@ class LoanStateTransitionsManagerTest {
     private static final Integer ZIP_CODE = 22617;
 
     @Test
-    void initializeState() {
+    public void initializeState() {
     }
 
     @Test
-    void refinanceLoan() throws ProcessException {
+    public void refinanceLoan() throws ProcessException {
         LoanData data = createLoanApp(LoanData.LOAN_PURPOSE.REFINANCE, LoanEvent.newLoanApp);
 
         LoanData refinanceData = new LoanData();
@@ -54,14 +54,14 @@ class LoanStateTransitionsManagerTest {
     }
 
     @Test
-    void purchaseLoan() throws ProcessException {
+    public void purchaseLoan() throws ProcessException {
         LoanData data = createLoanApp(LoanData.LOAN_PURPOSE.PURCHASE, LoanEvent.newLoanApp);
         Assert.assertNotNull(data.getLoanId());
         Assert.assertEquals(LoanState.CO_BORROWER, data.getNextLoanState());
     }
 
     @Test
-    void addCoBorrower() throws ProcessException {
+    public void addCoBorrower() throws ProcessException {
         LoanData data = createLoanApp(LoanData.LOAN_PURPOSE.PURCHASE, LoanEvent.newLoanApp);
 
         LoanData coBorrowerData = new LoanData();
@@ -79,7 +79,7 @@ class LoanStateTransitionsManagerTest {
     }
 
     @Test
-    void loanSubmit() throws ProcessException {
+    public void loanSubmit() throws ProcessException {
         LoanData data = createLoanApp(LoanData.LOAN_PURPOSE.PURCHASE, LoanEvent.newLoanApp);
 
         LoanData loanSubmitData = new LoanData();
@@ -92,14 +92,19 @@ class LoanStateTransitionsManagerTest {
     }
 
     @Test
-    void getUserLoan() throws ProcessException {
+    public void getUserLoan() throws ProcessException {
         LoanData data = createLoanApp(LoanData.LOAN_PURPOSE.REFINANCE, LoanEvent.newLoanApp);
         LoanApp loanApp = stateTrasitionsManager.getUserLoanData(data.getLoanId()).toLoanApp();
         Assert.assertEquals(loanApp.getLoanId(), data.getLoanId());
     }
 
+    @Test(expected=ProcessException.class)
+    public void getUserLoanForUnknownUser() throws LoanException {
+        stateTrasitionsManager.getUserLoan(UUID.randomUUID());
+    }
+
     @Test
-    void getUserLoanData() throws ProcessException {
+    public void getUserLoanData() throws ProcessException {
         LoanData data = createLoanApp(LoanData.LOAN_PURPOSE.REFINANCE, LoanEvent.newLoanApp);
         LoanData loanData = stateTrasitionsManager.getUserLoanData(data.getLoanId());
         Assert.assertEquals(loanData.getLoanId(), data.getLoanId());
