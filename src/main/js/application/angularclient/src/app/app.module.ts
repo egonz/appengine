@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { RefinanceComponent } from './refinance/refinance.component';
 import { LoanPurposeComponent } from './loan-purpose/loan-purpose.component';
-import { StatePickerComponent } from './state-picker/state-picker.component';
+import { CookieService } from 'ngx-cookie-service';
+import { CoBorrowerComponent } from './co-borrower/co-borrower.component';
+import { LoanSubmitComponent } from './loan-submit/loan-submit.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { StatePickerComponent } from './state-picker/state-picker.component';
     ProfileEditorComponent,
     RefinanceComponent,
     LoanPurposeComponent,
-    StatePickerComponent
+    CoBorrowerComponent,
+    LoanSubmitComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { StatePickerComponent } from './state-picker/state-picker.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

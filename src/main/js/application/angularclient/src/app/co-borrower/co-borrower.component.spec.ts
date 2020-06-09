@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatePickerComponent } from './state-picker.component';
+import { CoBorrowerComponent } from './co-borrower.component';
 
-describe('StatePickerComponent', () => {
-  let component: StatePickerComponent;
-  let fixture: ComponentFixture<StatePickerComponent>;
+describe('CoBorrowerComponent', () => {
+  let component: CoBorrowerComponent;
+  let fixture: ComponentFixture<CoBorrowerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatePickerComponent ]
+      declarations: [ CoBorrowerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StatePickerComponent);
+    fixture = TestBed.createComponent(CoBorrowerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

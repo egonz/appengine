@@ -73,6 +73,15 @@ public class LoanStateTransitionsManager extends AbstractStateTransitionsManager
         return null;
     }
 
+    @Override
+    public LoanData getUserLoanData(UUID loanId) throws LoanException {
+        if (loanId != null) {
+            return getLoanData().get(loanId);
+        }
+
+        return null;
+    }
+
     private LoanData checkStateForReturningUser(LoanData data) throws LoanException {
         if (data != null) {
             LoanData loanData = getUserLoan(data.getLoanId());

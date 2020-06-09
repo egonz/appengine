@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
-import {AppEngineStateService, AppEngineState} from './app-engine-state.service';
+import {AppEngineApiService, AppEngineState, LoanState} from './app-engine-api.service';
+import {AppEngineLoanCookieService, LoanCookie} from './app-engine-loan-cookie.service'
 
 @Component({
   selector: 'app-root',
@@ -9,23 +10,35 @@ import {AppEngineStateService, AppEngineState} from './app-engine-state.service'
 })
 export class AppComponent {
   title = 'angularclient';
+  
+  loanCookie: LoanCookie = null;
 
   appEngineState: AppEngineState;
 
-  constructor(private router: Router, private stateService: AppEngineStateService) { 
-    this.stateService.getConfig()
-    .subscribe((data: AppEngineState) => {
-      this.appEngineState = data;
-      this.onAppEngineStateChange();
-    });
+  constructor(private router: Router, private apiService: AppEngineApiService, 
+    private loanCookieService: AppEngineLoanCookieService) {
   }
 
-  onAppEngineStateChange() {
-    console.log("AppEngineState response " + this.appEngineState.state);
+  public ngOnInit(): void {
+    this.loadLoan();
+  }
 
-    if (this.appEngineState.state === 'refinance')
-      this.router.navigate(['refinance']);
-    else
-      this.router.navigate(['loan-purpose']);
+  public loadLoan(): void {
+    this.loanCookie = this.loanCookieService.getLoanCookie();
+
+    if (this.loanCookie !== null && this.loanCookie.loanId.length > 0) {
+      console.log("loanId: " + this.loanCookie.loanId);
+      this.apiService.getAppEngineState(this.loanCookie.loanId)
+      .subscribe((data: AppEngineState) => {
+        this.appEngineState = data;
+        this.router.navigate([this.appEngineState.nextLoanState.toLowerCase()]);
+      }, (error: string) => {
+        this.loanCookieService.deleteLoanCookie();
+        this.router.navigate(['loan_purpose']);
+      });
+    } else {
+      console.log("loanId is null");
+      this.router.navigate(['loan_purpose']);
+    }
   }
 }

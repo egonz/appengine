@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md main-header">
+        <h3>Thank you for your submission</h3>
+    </div>
+</div>
+
+<div *ngIf="loanApp !== undefined && loanApp !== null">
+    <div class="row loan-app-field">
+        <div class="col-sm-3 loan-app-label">Full Name:</div> 
+        <div class="col-md loan-app-value">{{loanApp.fullName}}</div>
+    </div>
+
+    <div class="row loan-app-field">
+        <div class="col-sm-3 loan-app-label">Age:</div> 
+        <div class="col-md loan-app-value">{{loanApp.age}}</div>
+    </div>
+
+    <div class="row loan-app-field">
+        <div class="col-sm-3 loan-app-label">Loan Purpose:</div> 
+        <div class="col-md loan-app-value">{{loanApp.loanPurpose}}</div>
+    </div>
+
+    <div *ngIf="loanApp.streetAddress !== undefined && loanApp.streetAddress !== null">
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label">Street Address:</div> 
+            <div class="col-md loan-app-value">{{loanApp.streetAddress}}</div>
+        </div>
+
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label">City:</div> 
+            <div class="col-md loan-app-value">{{loanApp.city}}</div>
+        </div>
+
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label">State:</div> 
+            <div class="col-md loan-app-value">{{loanApp.state}}</div>
+        </div>
+
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label">Zip Code:</div> 
+            <div class="col-md loan-app-value">{{loanApp.zipCode}}</div>
+        </div>
+    </div>
+
+    <div *ngIf="loanApp.coBorrower !== undefined && loanApp.coBorrower !== null">
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label">Co-Borrower:</div>
+        </div>
+
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label tab-indent">Full Name:</div> 
+            <div class="col-md loan-app-value">{{loanApp.coBorrower.fullName}}</div>
+        </div>
+
+        <div class="row loan-app-field">
+            <div class="col-sm-3 loan-app-label tab-indent">Age:</div> 
+            <div class="col-md loan-app-value">{{loanApp.coBorrower.age}}</div>
+        </div>
+    </div>
+</div>

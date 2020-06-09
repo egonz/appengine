@@ -1,0 +1,71 @@
+<div *ngIf="hasCoBorrower === false">
+    <div class="row">
+        <div class="col-md main-header">
+            <h3>Are you applying with a co-borrower?</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" (change)="changeCoBorrower($event)" value="yes" name="coBorrower">
+                <label class="form-check-label">
+                    Yes
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" (change)="changeCoBorrower($event)" value="no" name="coBorrower">
+                <label class="form-check-label">
+                    No
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="hasCoBorrower === true">
+    <div class="row">
+        <div class="col-md main-header">
+            <h3>Complete the following questions for your co-borrower.</h3>
+        </div>
+    </div>
+
+    <form [formGroup]="coBorrowerForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-sm-5">
+                <label class="app-engine-label" for="fullNameFormControl">What is your your co-borrower's name?</label>
+                <input type="text" class="form-control" formControlName="fullName">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <label class="app-engine-label">What is your your co-borrower's age?</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <input type="number" class="form-control" formControlName="age" min="1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <button class="button" type="submit">Next</button>
+            </div>
+        </div>
+
+        <div class=" debug">
+            <div class="row">
+                <div class="col-sm-4">
+                    DEBUG: 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    Form Status: {{ coBorrowerForm.status }} Age Validation: {{ this.coBorrowerForm.get('age').errors | json }}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

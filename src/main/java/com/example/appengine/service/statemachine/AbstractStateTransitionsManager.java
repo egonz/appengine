@@ -18,4 +18,6 @@ public abstract class AbstractStateTransitionsManager implements StateTransition
 
     public abstract LoanData getUserLoan(UUID loanId) throws LoanException;
 
+    public abstract LoanData getUserLoanData(UUID loanId) throws LoanException;
+
 }

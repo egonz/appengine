@@ -17,6 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/api/appengine/v1/loan")
 public class LoanController {
 
@@ -29,7 +30,7 @@ public class LoanController {
 
     @GetMapping(value = "/{loanId}")
     public LoanApp getLoanApp(@PathVariable("loanId") UUID loanId) throws LoanException {
-        return stateTrasitionsManager.getUserLoan(loanId).toLoanApp();
+        return stateTrasitionsManager.getUserLoanData(loanId).toLoanApp();
     }
 
     @GetMapping(value = "/debug")
@@ -74,6 +75,16 @@ public class LoanController {
         data.setLoanId(loanApp.getLoanId());
         data.setEvent(LoanEvent.coBorrower);
         data.setCoBorrower(loanApp.getCoBorrower());
+        data = (LoanData)stateTrasitionsManager.processEvent(data);
+        log.info(((LoanEvent)data.getEvent()).name() + ", loanId = " + data.getLoanId());
+        return data.toLoanApp();
+    }
+
+    @PostMapping(value = "/completed")
+    public LoanApp completed(@RequestBody LoanApp loanApp) throws ProcessException {
+        LoanData data = new LoanData();
+        data.setLoanId(loanApp.getLoanId());
+        data.setEvent(LoanEvent.loanSubmit);
         data = (LoanData)stateTrasitionsManager.processEvent(data);
         log.info(((LoanEvent)data.getEvent()).name() + ", loanId = " + data.getLoanId());
         return data.toLoanApp();

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import {Router} from '@angular/router';
+import {AppEngineApiService, AppEngineState, LoanApp} from '../app-engine-api.service';
+import {AppEngineLoanCookieService, LoanCookie} from '../app-engine-loan-cookie.service';
 
 @Component({
   selector: 'app-profile-editor',
@@ -9,9 +11,11 @@ import {Router} from '@angular/router';
 })
 export class ProfileEditorComponent implements OnInit {
 
-  step: string = "";
+  loanApp : LoanApp;
+  appEngineState: AppEngineState;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private apiService: AppEngineApiService,
+    private cookieService: AppEngineLoanCookieService) { }
 
   ngOnInit(): void {
   }
@@ -35,13 +39,23 @@ export class ProfileEditorComponent implements OnInit {
     loanPurpose: new FormControl()
   });
 
-  onSubmit(step: string) {
-    this.step = step;
-
+  onSubmit() {
     if(!this.profileForm.valid) {
       return false;
     } else {
-      this.router.navigate(['refinance']);
+      let loanApp = new LoanApp();
+      loanApp.fullName = this.profileForm.get('fullName').value;
+      loanApp.age = this.profileForm.get('age').value;
+      loanApp.loanPurpose = this.profileForm.get('loanPurpose').value.toUpperCase();
+
+      this.apiService.postNewLoan(loanApp)
+      .subscribe((data: LoanApp) => {
+        this.loanApp = data;
+        console.log(this.loanApp);
+
+        this.cookieService.setLoanCookie(new LoanCookie(this.loanApp.loanId));
+        this.router.navigate([this.loanApp.nextLoanState.toLowerCase()]);
+      });
     }
   }
 
