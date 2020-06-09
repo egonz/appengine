@@ -95,7 +95,7 @@ public class LoanStateTransitionsManager extends AbstractStateTransitionsManager
         return data;
     }
 
-    public ConcurrentHashMap<UUID, LoanData> getLoanData() {
+    private ConcurrentHashMap<UUID, LoanData> getLoanData() {
         return dbService.getLoanData();
     }
 }
