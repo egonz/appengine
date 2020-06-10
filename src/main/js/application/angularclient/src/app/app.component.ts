@@ -9,7 +9,7 @@ import {AppEngineLoanCookieService, LoanCookie} from './app-engine-loan-cookie.s
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'angularclient';
+  title = 'App Engine Loan POC';
   
   loanCookie: LoanCookie = null;
 
