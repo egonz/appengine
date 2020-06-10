@@ -1,12 +1,12 @@
 # Loan App Engine POC
 
-Built using [Spring Boot](https://spring.io/projects/spring-boot) and [Angular](https://angular.io/).
+Built using [Spring Boot](https://spring.io/projects/spring-boot) and [Angular](https://angular.io/). For simplicity the Angular app has been deployed to the Spring Boot static folder, allowing it to host it along with the backend.
 
 Minimum Requirements:
 
     Install a JVM.
 
-1. The Spring Boot backend can be built using:
+1. The Spring Boot app can be built using:
 
     mvnw clean install
 
